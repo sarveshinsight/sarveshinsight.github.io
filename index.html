@@ -572,16 +572,30 @@
             }
 
             function handleScroll() {
-                const scrollPosition = window.scrollY;
-                let currentId = 'home';
+                const scrollPos = window.scrollY;
+                const windowHeight = window.innerHeight;
+                const bodyHeight = document.documentElement.scrollHeight;
+                
+                let currentId = activeSectionId || 'home';
 
-                // Find section currently in view based on scroll position offset
-                for (let i = 0; i < sections.length; i++) {
-                    const section = sections[i];
-                    const sectionTop = section.offsetTop - 250;
-                    if (scrollPosition >= sectionTop) {
-                        currentId = section.getAttribute('id');
-                    }
+                // 1. Top of page
+                if (scrollPos < 150) {
+                    currentId = 'home';
+                } 
+                // 2. Scrolled to bottom of page
+                else if (scrollPos + windowHeight >= bodyHeight - 80) {
+                    currentId = 'contact';
+                } 
+                // 3. Section in active viewport
+                else {
+                    const viewportCheck = scrollPos + 250;
+                    sections.forEach(section => {
+                        const top = section.offsetTop;
+                        const height = section.offsetHeight;
+                        if (viewportCheck >= top && viewportCheck < top + height) {
+                            currentId = section.getAttribute('id');
+                        }
+                    });
                 }
 
                 if (currentId !== activeSectionId) {
