@@ -21,7 +21,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -31,33 +31,38 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Albert Sans', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif'],
                         mono: ['JetBrains Mono', 'monospace']
                     },
                     colors: {
                         obsidian: {
                             950: '#040508',
-                            900: '#06080d',
+                            900: '#07090e',
                             850: '#0a0e17',
-                            800: '#0d111a',
-                            700: '#131926',
-                            600: '#1c2538'
+                            800: '#0d121c',
+                            700: '#131a29',
+                            600: '#1d273d'
                         },
-                        emerald: {
-                            400: '#34d399',
-                            500: '#10b981',
-                            600: '#059669'
+                        indigo: {
+                            400: '#818cf8',
+                            500: '#6366f1',
+                            600: '#4f46e5'
                         },
-                        cyan: {
-                            400: '#22d3ee',
-                            500: '#06b6d4',
-                            600: '#0891b2'
+                        violet: {
+                            400: '#c084fc',
+                            500: '#a855f7',
+                            600: '#9333ea'
+                        },
+                        teal: {
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                            600: '#0d9488'
                         }
                     },
                     animation: {
                         'marquee': 'marquee 35s linear infinite',
                         'marquee-reverse': 'marquee-reverse 35s linear infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                        'pulse-glow': 'pulse-glow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite'
                     },
                     keyframes: {
                         marquee: {
@@ -67,6 +72,10 @@
                         'marquee-reverse': {
                             '0%': { transform: 'translateX(-50%)' },
                             '100%': { transform: 'translateX(0%)' }
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
+                            '50%': { opacity: '0.7', transform: 'scale(1.05)' }
                         }
                     }
                 }
@@ -76,16 +85,17 @@
     
     <style>
         :root {
-            --bg-main: #06080d;
-            --bg-card: #0d111a;
-            --bg-card-hover: #131926;
+            --bg-main: #07090e;
+            --bg-card: rgba(13, 18, 28, 0.75);
+            --bg-card-hover: rgba(19, 26, 41, 0.9);
             --border-card: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(99, 102, 241, 0.35);
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
             --text-muted: #64748b;
-            --accent-emerald: #10b981;
-            --accent-cyan: #06b6d4;
             --accent-indigo: #6366f1;
+            --accent-violet: #a855f7;
+            --accent-teal: #14b8a6;
         }
 
         html.light {
@@ -93,35 +103,38 @@
             --bg-card: #ffffff;
             --bg-card-hover: #f1f5f9;
             --border-card: rgba(0, 0, 0, 0.08);
+            --border-hover: rgba(99, 102, 241, 0.4);
             --text-primary: #0f172a;
             --text-secondary: #475569;
             --text-muted: #94a3b8;
-            --accent-emerald: #059669;
-            --accent-cyan: #0891b2;
             --accent-indigo: #4f46e5;
+            --accent-violet: #9333ea;
+            --accent-teal: #0d9488;
         }
 
         body {
             background-color: var(--bg-main);
             color: var(--text-primary);
-            font-family: 'Albert Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             overflow-x: hidden;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Ambient Grain Overlay */
+        /* Subtle Noise Overlay */
         .grain-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none;
             z-index: 1;
-            opacity: 0.035;
+            opacity: 0.03;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* Impeccable Plinth Card */
+        /* Glassmorphism Plinth Card */
         .plinth-card {
             background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--border-card);
             border-radius: 20px;
             transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
@@ -129,12 +142,12 @@
         }
         .plinth-card:hover {
             background: var(--bg-card-hover);
-            border-color: rgba(16, 185, 129, 0.3);
+            border-color: var(--border-hover);
             transform: translateY(-2px);
-            box-shadow: 0 16px 32px -10px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 20px 40px -15px rgba(99, 102, 241, 0.15);
         }
 
-        /* Spotlight Mouse Glow Card */
+        /* Spotlight Shader Card */
         .spotlight-card {
             position: relative;
             overflow: hidden;
@@ -143,35 +156,35 @@
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(500px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(16, 185, 129, 0.12), transparent 40%);
+            background: radial-gradient(500px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(99, 102, 241, 0.14), transparent 40%);
             opacity: var(--spotlight-opacity, 0);
             transition: opacity 0.3s ease;
             pointer-events: none;
             z-index: 1;
         }
 
-        /* Buttons (.ks-button) */
+        /* Action Buttons */
         .ks-button {
             display: inline-flex;
-            items-center: center;
             align-items: center;
+            justify-content: center;
             gap: 10px;
             padding: 14px 28px;
-            border-radius: 12px;
+            border-radius: 14px;
             font-weight: 700;
             font-size: 0.9375rem;
-            transition: all 0.2s ease;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
             cursor: pointer;
         }
         .ks-button-primary {
-            background: #10b981;
-            color: #040508;
-            box-shadow: 0 4px 20px -2px rgba(16, 185, 129, 0.4);
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 20px -2px rgba(99, 102, 241, 0.4);
         }
         .ks-button-primary:hover {
-            background: #34d399;
             transform: translateY(-1px);
-            box-shadow: 0 8px 24px -2px rgba(16, 185, 129, 0.5);
+            box-shadow: 0 8px 25px -2px rgba(99, 102, 241, 0.6);
+            opacity: 0.95;
         }
         .ks-button-ghost {
             background: rgba(255, 255, 255, 0.05);
@@ -183,11 +196,11 @@
             border-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* Before / After Proof Slider Component */
+        /* Interactive Proof Slider Component */
         .proof-stage {
             position: relative;
             width: 100%;
-            border-radius: 16px;
+            border-radius: 20px;
             overflow: hidden;
             border: 1px solid var(--border-card);
             background: #040508;
@@ -199,13 +212,13 @@
             width: var(--slider-pos, 50%);
             overflow: hidden;
             z-index: 2;
-            border-right: 2px solid #10b981;
-            background: #090d14;
+            border-right: 2px solid #6366f1;
+            background: #090d17;
         }
         .proof-layer-after {
             width: 100%;
             height: 100%;
-            background: #0d121f;
+            background: #0d1220;
         }
         .proof-handle {
             position: absolute;
@@ -214,7 +227,7 @@
             transform: translateX(-50%);
             z-index: 3;
             width: 4px;
-            background: #10b981;
+            background: #6366f1;
             cursor: ew-resize;
         }
         .proof-handle-button {
@@ -223,14 +236,14 @@
             transform: translate(-50%, -50%);
             width: 32px; height: 32px;
             border-radius: 50%;
-            background: #10b981;
-            color: #040508;
-            display: flex; items-center: center; justify-content: center;
-            box-shadow: 0 0 12px rgba(16, 185, 129, 0.6);
+            background: #6366f1;
+            color: #ffffff;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 16px rgba(99, 102, 241, 0.8);
             font-weight: bold; font-size: 12px;
         }
 
-        /* Marquee Track */
+        /* Marquee Mask */
         .marquee-container {
             display: flex;
             overflow: hidden;
@@ -239,18 +252,17 @@
             -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
 
-        /* Theme Toggle Script */
         html.light .grain-overlay { opacity: 0.015; }
     </style>
 </head>
-<body class="relative min-h-screen selection:bg-emerald-500 selection:text-black">
+<body class="relative min-h-screen selection:bg-indigo-500 selection:text-white">
 
     <!-- Noise Grain -->
     <div class="grain-overlay" aria-hidden="true"></div>
 
-    <!-- Ambient Glow Orbs -->
-    <div class="fixed top-0 left-1/4 w-[600px] h-[600px] bg-emerald-600/10 rounded-full blur-[140px] pointer-events-none z-0"></div>
-    <div class="fixed top-1/2 right-10 w-[500px] h-[500px] bg-cyan-600/10 rounded-full blur-[140px] pointer-events-none z-0"></div>
+    <!-- Cohesive Atmosphere Orbs -->
+    <div class="fixed top-0 left-1/4 w-[600px] h-[600px] bg-indigo-600/15 rounded-full blur-[140px] pointer-events-none z-0 animate-pulse-glow"></div>
+    <div class="fixed top-1/2 right-10 w-[500px] h-[500px] bg-violet-600/15 rounded-full blur-[140px] pointer-events-none z-0 animate-pulse-glow" style="animation-delay: 2s;"></div>
 
     <!-- HEADER & NAVIGATION -->
     <header class="fixed top-0 left-0 right-0 z-50 bg-obsidian-900/80 backdrop-blur-2xl border-b border-white/5 transition-colors">
@@ -258,11 +270,11 @@
             
             <!-- Brand Logo -->
             <a href="#home" class="flex items-center gap-3 group">
-                <div class="h-9 w-9 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
+                <div class="h-9 w-9 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 group-hover:scale-105 transition-transform">
                     <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                 </div>
                 <div class="flex flex-col">
-                    <span class="font-extrabold text-base tracking-tight text-white group-hover:text-emerald-400 transition-colors">Sarvesh Patki</span>
+                    <span class="font-extrabold text-base tracking-tight text-white group-hover:text-indigo-400 transition-colors">Sarvesh Patki</span>
                     <span class="text-[11px] font-mono text-slate-400 tracking-wider">INFRASTRUCTURE ADMIN</span>
                 </div>
             </a>
@@ -284,7 +296,7 @@
                     <svg id="theme-icon-light" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
                 </button>
 
-                <a href="https://github.com/sarveshinsight/sarveshinsight.github.io" target="_blank" rel="noopener" class="hidden sm:inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-obsidian-800 border border-white/10 text-xs font-mono text-slate-300 hover:border-emerald-500/40 transition-all">
+                <a href="https://github.com/sarveshinsight/sarveshinsight.github.io" target="_blank" rel="noopener" class="hidden sm:inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-obsidian-800 border border-white/10 text-xs font-mono text-slate-300 hover:border-indigo-500/40 transition-all">
                     <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
                     <span>★ sarveshinsight</span>
                 </a>
@@ -297,17 +309,17 @@
         <!-- HERO SECTION -->
         <section id="home" class="space-y-8 pt-8">
             
-            <!-- Uptime Emerald Slice Banner -->
-            <div class="w-full bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <!-- Cohesive Status Slice Banner -->
+            <div class="w-full bg-indigo-500/10 border border-indigo-500/20 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div class="flex items-center gap-3">
                     <span class="flex h-3 w-3 relative">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-indigo-500"></span>
                     </span>
-                    <span class="text-xs font-mono font-semibold text-emerald-400 tracking-wide uppercase">Version 2026 Live · Resilient Infrastructure Engine</span>
+                    <span class="text-xs font-mono font-semibold text-indigo-300 tracking-wide uppercase">Resilient Cloud Infrastructure · 99.9% Uptime SLA</span>
                 </div>
                 <div class="flex items-center gap-2 text-xs font-mono text-slate-400">
-                    <span>STATUS: 99.9% UPTIME MAINTAINED</span>
+                    <span class="text-teal-400 font-semibold">● NODES ACTIVE</span>
                 </div>
             </div>
 
@@ -315,17 +327,17 @@
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 <div class="lg:col-span-8 space-y-6">
                     <div class="flex items-center gap-4">
-                        <div class="h-16 w-16 rounded-2xl overflow-hidden border-2 border-emerald-500/40 shadow-xl shadow-emerald-500/10 shrink-0">
+                        <div class="h-16 w-16 rounded-2xl overflow-hidden border-2 border-indigo-500/40 shadow-xl shadow-indigo-500/20 shrink-0">
                             <img src="https://i.ibb.co/ZsFxdkQ/d075f8140e6c227ce55ed9caea97e36b.gif" alt="Sarvesh Patki Avatar" class="h-full w-full object-cover">
                         </div>
                         <div>
                             <h1 class="text-2xl font-bold text-white tracking-tight">Sarvesh Patki</h1>
-                            <p class="text-xs font-mono text-emerald-400 font-semibold mt-0.5">Administrator @ Coaderoasis & FreezeHost</p>
+                            <p class="text-xs font-mono text-indigo-400 font-semibold mt-0.5">Administrator @ Coaderoasis & FreezeHost</p>
                         </div>
                     </div>
 
                     <h2 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.08]">
-                        Building <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-indigo-400">resilient</span> cloud infrastructure.
+                        Building <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-teal-300">resilient</span> cloud infrastructure.
                     </h2>
 
                     <p class="text-base sm:text-lg text-slate-400 leading-relaxed max-w-2xl font-normal">
@@ -338,7 +350,7 @@
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                         </a>
                         <a href="https://discord.com/users/741184115981680702" target="_blank" rel="noopener" class="ks-button ks-button-ghost">
-                            <span>Discord</span>
+                            <span>Discord Profile</span>
                         </a>
                     </div>
                 </div>
@@ -346,18 +358,18 @@
                 <!-- Technical Stack Plinth Widget -->
                 <div class="lg:col-span-4 plinth-card p-6 space-y-6">
                     <div class="flex items-center justify-between border-b border-white/5 pb-4">
-                        <span class="text-xs font-mono font-semibold text-emerald-400 tracking-wider uppercase">Core Technical Stack</span>
-                        <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">VERIFIED</span>
+                        <span class="text-xs font-mono font-semibold text-indigo-400 tracking-wider uppercase">Core Technical Stack</span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">VERIFIED</span>
                     </div>
 
                     <div class="space-y-3">
                         <div class="text-xs text-slate-400 font-medium">Primary Competencies</div>
                         <div class="flex flex-wrap gap-2">
-                            <span class="text-xs font-mono bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 px-2.5 py-1 rounded-lg">Linux (Ubuntu/Debian)</span>
-                            <span class="text-xs font-mono bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 px-2.5 py-1 rounded-lg">Pterodactyl Panel</span>
-                            <span class="text-xs font-mono bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 px-2.5 py-1 rounded-lg">C</span>
+                            <span class="text-xs font-mono bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 px-2.5 py-1 rounded-lg">Linux (Ubuntu/Debian)</span>
+                            <span class="text-xs font-mono bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 px-2.5 py-1 rounded-lg">Pterodactyl Panel</span>
+                            <span class="text-xs font-mono bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 px-2.5 py-1 rounded-lg">C</span>
                             <span class="text-xs font-mono bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 px-2.5 py-1 rounded-lg">MySQL</span>
-                            <span class="text-xs font-mono bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 px-2.5 py-1 rounded-lg">Python</span>
+                            <span class="text-xs font-mono bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 px-2.5 py-1 rounded-lg">Python</span>
                         </div>
                     </div>
 
@@ -379,7 +391,7 @@
         <section id="showcase" class="space-y-6">
             <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
                 <div>
-                    <span class="text-xs font-mono text-emerald-400 font-semibold uppercase tracking-widest">Interactive Proof Stage</span>
+                    <span class="text-xs font-mono text-indigo-400 font-semibold uppercase tracking-widest">Interactive Proof Stage</span>
                     <h2 class="text-3xl font-extrabold text-white mt-1">Infrastructure Optimization</h2>
                 </div>
                 <div class="text-xs font-mono text-slate-400">Drag slider to compare manual vs. automated stack</div>
@@ -390,29 +402,29 @@
                 
                 <!-- AFTER Layer (Optimized Stack) -->
                 <div class="proof-layer-after p-6 sm:p-10 flex flex-col justify-between">
-                    <div class="flex items-center justify-between border-b border-emerald-500/20 pb-4">
-                        <span class="text-xs font-mono font-bold text-emerald-400 tracking-wider uppercase">AFTER: Automated Resilient Infrastructure</span>
-                        <span class="px-3 py-1 rounded-full text-xs font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">99.9% SLA</span>
+                    <div class="flex items-center justify-between border-b border-indigo-500/20 pb-4">
+                        <span class="text-xs font-mono font-bold text-indigo-400 tracking-wider uppercase">AFTER: Automated Resilient Infrastructure</span>
+                        <span class="px-3 py-1 rounded-full text-xs font-mono bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">99.9% SLA</span>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-auto">
-                        <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 space-y-1">
-                            <div class="text-xs font-mono text-slate-400">Pterodactyl Panel</div>
-                            <div class="text-lg font-bold text-emerald-300">Automated Provisioning</div>
-                        </div>
-                        <div class="p-4 rounded-xl bg-cyan-500/10 border border-cyan-500/20 space-y-1">
-                            <div class="text-xs font-mono text-slate-400">MSH Hibernation</div>
-                            <div class="text-lg font-bold text-cyan-300">Zero Idle CPU Waste</div>
-                        </div>
                         <div class="p-4 rounded-xl bg-indigo-500/10 border border-indigo-500/20 space-y-1">
+                            <div class="text-xs font-mono text-slate-400">Pterodactyl Panel</div>
+                            <div class="text-lg font-bold text-indigo-300">Automated Provisioning</div>
+                        </div>
+                        <div class="p-4 rounded-xl bg-violet-500/10 border border-violet-500/20 space-y-1">
+                            <div class="text-xs font-mono text-slate-400">MSH Hibernation</div>
+                            <div class="text-lg font-bold text-violet-300">Zero Idle CPU Waste</div>
+                        </div>
+                        <div class="p-4 rounded-xl bg-teal-500/10 border border-teal-500/20 space-y-1">
                             <div class="text-xs font-mono text-slate-400">Docker Containers</div>
-                            <div class="text-lg font-bold text-indigo-300">Isolated Security</div>
+                            <div class="text-lg font-bold text-teal-300">Isolated Security</div>
                         </div>
                     </div>
 
                     <div class="flex items-center justify-between text-xs font-mono text-slate-400">
                         <span>ORACLE & SELF-HOSTED NODES (NL/SG)</span>
-                        <span class="text-emerald-400 font-bold">OPTIMIZED</span>
+                        <span class="text-teal-400 font-bold">OPTIMIZED</span>
                     </div>
                 </div>
 
@@ -458,20 +470,20 @@
         <section class="space-y-4 py-4">
             <div class="marquee-container">
                 <div class="flex gap-4 animate-marquee py-2">
-                    <span class="px-4 py-2 rounded-xl bg-obsidian-800 border border-white/10 text-xs font-mono text-emerald-400 flex items-center gap-2"><i>●</i> Netherlands Node: ACTIVE</span>
-                    <span class="px-4 py-2 rounded-xl bg-obsidian-800 border border-white/10 text-xs font-mono text-cyan-400 flex items-center gap-2"><i>●</i> Singapore Node: ACTIVE</span>
-                    <span class="px-4 py-2 rounded-xl bg-obsidian-800 border border-white/10 text-xs font-mono text-indigo-400 flex items-center gap-2"><i>●</i> Oracle Infrastructure: ONLINE</span>
-                    <span class="px-4 py-2 rounded-xl bg-obsidian-800 border border-white/10 text-xs font-mono text-yellow-400 flex items-center gap-2"><i>●</i> 40.9k+ Servers Hosted</span>
-                    <span class="px-4 py-2 rounded-xl bg-obsidian-800 border border-white/10 text-xs font-mono text-emerald-400 flex items-center gap-2"><i>●</i> 38.7k+ Active Users</span>
-                    <span class="px-4 py-2 rounded-xl bg-obsidian-800 border border-white/10 text-xs font-mono text-cyan-400 flex items-center gap-2"><i>●</i> MSH Hibernation: ENABLED</span>
+                    <span class="px-4 py-2 rounded-xl bg-obsidian-800 border border-white/10 text-xs font-mono text-indigo-400 flex items-center gap-2"><i>●</i> Netherlands Node: ACTIVE</span>
+                    <span class="px-4 py-2 rounded-xl bg-obsidian-800 border border-white/10 text-xs font-mono text-teal-400 flex items-center gap-2"><i>●</i> Singapore Node: ACTIVE</span>
+                    <span class="px-4 py-2 rounded-xl bg-obsidian-800 border border-white/10 text-xs font-mono text-violet-400 flex items-center gap-2"><i>●</i> Oracle Infrastructure: ONLINE</span>
+                    <span class="px-4 py-2 rounded-xl bg-obsidian-800 border border-white/10 text-xs font-mono text-indigo-300 flex items-center gap-2"><i>●</i> 40.9k+ Servers Hosted</span>
+                    <span class="px-4 py-2 rounded-xl bg-obsidian-800 border border-white/10 text-xs font-mono text-teal-300 flex items-center gap-2"><i>●</i> 38.7k+ Active Users</span>
+                    <span class="px-4 py-2 rounded-xl bg-obsidian-800 border border-white/10 text-xs font-mono text-violet-300 flex items-center gap-2"><i>●</i> MSH Hibernation: ENABLED</span>
 
                     <!-- Duplicate for infinite loop -->
-                    <span class="px-4 py-2 rounded-xl bg-obsidian-800 border border-white/10 text-xs font-mono text-emerald-400 flex items-center gap-2"><i>●</i> Netherlands Node: ACTIVE</span>
-                    <span class="px-4 py-2 rounded-xl bg-obsidian-800 border border-white/10 text-xs font-mono text-cyan-400 flex items-center gap-2"><i>●</i> Singapore Node: ACTIVE</span>
-                    <span class="px-4 py-2 rounded-xl bg-obsidian-800 border border-white/10 text-xs font-mono text-indigo-400 flex items-center gap-2"><i>●</i> Oracle Infrastructure: ONLINE</span>
-                    <span class="px-4 py-2 rounded-xl bg-obsidian-800 border border-white/10 text-xs font-mono text-yellow-400 flex items-center gap-2"><i>●</i> 40.9k+ Servers Hosted</span>
-                    <span class="px-4 py-2 rounded-xl bg-obsidian-800 border border-white/10 text-xs font-mono text-emerald-400 flex items-center gap-2"><i>●</i> 38.7k+ Active Users</span>
-                    <span class="px-4 py-2 rounded-xl bg-obsidian-800 border border-white/10 text-xs font-mono text-cyan-400 flex items-center gap-2"><i>●</i> MSH Hibernation: ENABLED</span>
+                    <span class="px-4 py-2 rounded-xl bg-obsidian-800 border border-white/10 text-xs font-mono text-indigo-400 flex items-center gap-2"><i>●</i> Netherlands Node: ACTIVE</span>
+                    <span class="px-4 py-2 rounded-xl bg-obsidian-800 border border-white/10 text-xs font-mono text-teal-400 flex items-center gap-2"><i>●</i> Singapore Node: ACTIVE</span>
+                    <span class="px-4 py-2 rounded-xl bg-obsidian-800 border border-white/10 text-xs font-mono text-violet-400 flex items-center gap-2"><i>●</i> Oracle Infrastructure: ONLINE</span>
+                    <span class="px-4 py-2 rounded-xl bg-obsidian-800 border border-white/10 text-xs font-mono text-indigo-300 flex items-center gap-2"><i>●</i> 40.9k+ Servers Hosted</span>
+                    <span class="px-4 py-2 rounded-xl bg-obsidian-800 border border-white/10 text-xs font-mono text-teal-300 flex items-center gap-2"><i>●</i> 38.7k+ Active Users</span>
+                    <span class="px-4 py-2 rounded-xl bg-obsidian-800 border border-white/10 text-xs font-mono text-violet-300 flex items-center gap-2"><i>●</i> MSH Hibernation: ENABLED</span>
                 </div>
             </div>
 
@@ -499,7 +511,7 @@
         <section id="projects" class="space-y-8">
             <div class="flex items-center justify-between">
                 <div>
-                    <span class="text-xs font-mono text-emerald-400 font-semibold uppercase tracking-widest">Core Platforms</span>
+                    <span class="text-xs font-mono text-indigo-400 font-semibold uppercase tracking-widest">Core Platforms</span>
                     <h2 class="text-3xl font-extrabold text-white mt-1">Featured Platforms & Infrastructure</h2>
                 </div>
             </div>
@@ -507,19 +519,19 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                 <!-- COADEROASIS PLINTH -->
-                <a href="https://coderoasis.com/" target="_blank" rel="noopener" class="spotlight-card plinth-card p-8 flex flex-col justify-between group">
+                <a href="https://coderoasis.com/" target="_blank" rel="noopener" class="spotlight-card plinth-card p-8 flex flex-col justify-between group hover:border-indigo-500/40">
                     <div class="space-y-6">
                         <div class="flex items-start justify-between">
                             <div class="flex items-center gap-4">
-                                <div class="h-12 w-12 rounded-xl overflow-hidden border border-emerald-500/30 p-0.5 bg-emerald-500/10 shrink-0">
+                                <div class="h-12 w-12 rounded-xl overflow-hidden border border-indigo-500/30 p-0.5 bg-indigo-500/10 shrink-0">
                                     <img src="https://i.ibb.co/8L7RcJJD/Whats-App-Image-2025-07-14-at-00-39-46-34f86e2c.jpg" alt="Coaderoasis" class="h-full w-full object-cover rounded-lg">
                                 </div>
                                 <div>
-                                    <span class="text-xs font-mono text-emerald-400 font-bold uppercase tracking-wider">ADMINISTRATOR</span>
-                                    <h3 class="text-2xl font-bold text-white group-hover:text-emerald-300 transition-colors">Coaderoasis</h3>
+                                    <span class="text-xs font-mono text-indigo-400 font-bold uppercase tracking-wider">ADMINISTRATOR</span>
+                                    <h3 class="text-2xl font-bold text-white group-hover:text-indigo-300 transition-colors">Coaderoasis</h3>
                                 </div>
                             </div>
-                            <svg class="w-5 h-5 text-slate-500 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                            <svg class="w-5 h-5 text-slate-500 group-hover:text-indigo-400 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
                         </div>
 
                         <p class="text-slate-300 text-sm leading-relaxed">
@@ -527,36 +539,36 @@
                         </p>
 
                         <div class="flex flex-wrap gap-2 pt-2">
-                            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Cryptography</span>
-                            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Linux</span>
-                            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Java</span>
-                            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Python</span>
+                            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Cryptography</span>
+                            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Linux</span>
+                            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Java</span>
+                            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Python</span>
                         </div>
                     </div>
 
                     <div class="mt-8 pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-slate-400">
                         <span>ORACLE CLOUD INFRASTRUCTURE</span>
-                        <span class="text-emerald-400 font-bold">ONLINE</span>
+                        <span class="text-teal-400 font-bold">ONLINE</span>
                     </div>
                 </a>
 
                 <!-- FREEZEHOST PLINTH -->
-                <a href="https://freezehost.pro/" target="_blank" rel="noopener" class="spotlight-card plinth-card p-8 flex flex-col justify-between group">
+                <a href="https://freezehost.pro/" target="_blank" rel="noopener" class="spotlight-card plinth-card p-8 flex flex-col justify-between group hover:border-violet-500/40">
                     <div class="space-y-6">
                         <div class="flex items-start justify-between">
                             <div class="flex items-center gap-4">
-                                <div class="h-12 w-12 rounded-xl overflow-hidden border border-cyan-500/30 p-0.5 bg-cyan-500/10 shrink-0">
+                                <div class="h-12 w-12 rounded-xl overflow-hidden border border-violet-500/30 p-0.5 bg-violet-500/10 shrink-0">
                                     <img src="https://i.ibb.co/5hS6W82g/405729d61aa764b1ae7042fa89aaad9f.png" alt="FreezeHost" class="h-full w-full object-cover rounded-lg">
                                 </div>
                                 <div>
                                     <div class="flex items-center gap-2">
-                                        <span class="text-xs font-mono text-cyan-400 font-bold uppercase tracking-wider">ADMINISTRATOR</span>
-                                        <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">Free Hosting</span>
+                                        <span class="text-xs font-mono text-violet-400 font-bold uppercase tracking-wider">ADMINISTRATOR</span>
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-violet-500/20 text-violet-300 border border-violet-500/30">Free Hosting</span>
                                     </div>
-                                    <h3 class="text-2xl font-bold text-white group-hover:text-cyan-300 transition-colors">FreezeHost</h3>
+                                    <h3 class="text-2xl font-bold text-white group-hover:text-violet-300 transition-colors">FreezeHost</h3>
                                 </div>
                             </div>
-                            <svg class="w-5 h-5 text-slate-500 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                            <svg class="w-5 h-5 text-slate-500 group-hover:text-violet-400 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
                         </div>
 
                         <p class="text-slate-300 text-sm leading-relaxed">
@@ -564,15 +576,15 @@
                         </p>
 
                         <div class="flex flex-wrap gap-2 pt-2">
-                            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">NL Self-Hosted Node</span>
-                            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">SG Provider Node</span>
-                            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">MSH System</span>
+                            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-violet-500/10 text-violet-300 border border-violet-500/20">NL Self-Hosted Node</span>
+                            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-violet-500/10 text-violet-300 border border-violet-500/20">SG Provider Node</span>
+                            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-violet-500/10 text-violet-300 border border-violet-500/20">MSH System</span>
                         </div>
                     </div>
 
                     <div class="mt-8 pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-slate-400">
                         <span>AUTOMATED HIBERNATION ENGINE</span>
-                        <span class="text-cyan-400 font-bold">ACTIVE</span>
+                        <span class="text-teal-400 font-bold">ACTIVE</span>
                     </div>
                 </a>
 
@@ -582,26 +594,26 @@
         <!-- CAREER EXPERIENCE RECORD -->
         <section id="experience" class="space-y-8 max-w-4xl mx-auto">
             <div class="text-center space-y-2">
-                <span class="text-xs font-mono text-emerald-400 font-semibold uppercase tracking-widest">Track Record</span>
+                <span class="text-xs font-mono text-indigo-400 font-semibold uppercase tracking-widest">Track Record</span>
                 <h2 class="text-3xl font-extrabold text-white">Experience & Career History</h2>
             </div>
 
             <div class="space-y-4 pt-4">
                 
                 <!-- Timeline Card 1 -->
-                <div class="plinth-card p-6 sm:p-8 flex flex-col sm:flex-row gap-6 group hover:border-emerald-500/40">
-                    <div class="h-12 w-12 rounded-xl border border-emerald-500/30 bg-emerald-500/10 shrink-0 flex items-center justify-center overflow-hidden">
+                <div class="plinth-card p-6 sm:p-8 flex flex-col sm:flex-row gap-6 group hover:border-indigo-500/40">
+                    <div class="h-12 w-12 rounded-xl border border-indigo-500/30 bg-indigo-500/10 shrink-0 flex items-center justify-center overflow-hidden">
                         <img src="https://i.ibb.co/8L7RcJJD/Whats-App-Image-2025-07-14-at-00-39-46-34f86e2c.jpg" alt="Coaderoasis" class="h-full w-full object-cover">
                     </div>
                     <div class="space-y-2 flex-grow">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                            <h3 class="text-xl font-bold text-white group-hover:text-emerald-300 transition-colors">
+                            <h3 class="text-xl font-bold text-white group-hover:text-indigo-300 transition-colors">
                                 <a href="https://coderoasis.com/" target="_blank" rel="noopener" class="hover:underline flex items-center gap-2">
                                     Coaderoasis
                                     <svg class="w-4 h-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
                                 </a>
                             </h3>
-                            <span class="text-xs font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full w-fit">2024 — Present</span>
+                            <span class="text-xs font-mono text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-3 py-1 rounded-full w-fit">2024 — Present</span>
                         </div>
                         <div class="text-xs font-mono font-semibold text-slate-400 uppercase">Administrator</div>
                         <p class="text-sm text-slate-300 leading-relaxed pt-1">
@@ -611,19 +623,19 @@
                 </div>
 
                 <!-- Timeline Card 2 -->
-                <div class="plinth-card p-6 sm:p-8 flex flex-col sm:flex-row gap-6 group hover:border-cyan-500/40">
-                    <div class="h-12 w-12 rounded-xl border border-cyan-500/30 bg-cyan-500/10 shrink-0 flex items-center justify-center overflow-hidden">
+                <div class="plinth-card p-6 sm:p-8 flex flex-col sm:flex-row gap-6 group hover:border-violet-500/40">
+                    <div class="h-12 w-12 rounded-xl border border-violet-500/30 bg-violet-500/10 shrink-0 flex items-center justify-center overflow-hidden">
                         <img src="https://i.ibb.co/5hS6W82g/405729d61aa764b1ae7042fa89aaad9f.png" alt="FreezeHost" class="h-full w-full object-cover">
                     </div>
                     <div class="space-y-2 flex-grow">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                            <h3 class="text-xl font-bold text-white group-hover:text-cyan-300 transition-colors">
+                            <h3 class="text-xl font-bold text-white group-hover:text-violet-300 transition-colors">
                                 <a href="https://freezehost.pro/" target="_blank" rel="noopener" class="hover:underline flex items-center gap-2">
                                     FreezeHost
                                     <svg class="w-4 h-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
                                 </a>
                             </h3>
-                            <span class="text-xs font-mono text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 px-3 py-1 rounded-full w-fit">2025 — Present</span>
+                            <span class="text-xs font-mono text-violet-400 bg-violet-500/10 border border-violet-500/20 px-3 py-1 rounded-full w-fit">2025 — Present</span>
                         </div>
                         <div class="text-xs font-mono font-semibold text-slate-400 uppercase">Administrator</div>
                         <p class="text-sm text-slate-300 leading-relaxed pt-1">
@@ -650,13 +662,13 @@
                 </div>
 
                 <!-- Timeline Card 4 -->
-                <div class="plinth-card p-6 sm:p-8 flex flex-col sm:flex-row gap-6 group hover:border-purple-500/40">
+                <div class="plinth-card p-6 sm:p-8 flex flex-col sm:flex-row gap-6 group hover:border-violet-500/40">
                     <div class="h-12 w-12 rounded-xl border border-white/10 bg-obsidian-800 shrink-0 flex items-center justify-center overflow-hidden">
                         <img src="https://i.ibb.co/zHDSzZ4L/image.png" alt="Netly.gg" class="h-full w-full object-cover">
                     </div>
                     <div class="space-y-2 flex-grow">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                            <h3 class="text-xl font-bold text-white group-hover:text-purple-300 transition-colors">
+                            <h3 class="text-xl font-bold text-white group-hover:text-violet-300 transition-colors">
                                 <a href="https://netly.gg/" target="_blank" rel="noopener" class="hover:underline flex items-center gap-2">
                                     Netly.gg
                                     <svg class="w-4 h-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
@@ -678,18 +690,18 @@
         <section id="metrics" class="space-y-8">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
                 <div>
-                    <span class="text-xs font-mono text-emerald-400 font-semibold uppercase tracking-widest font-semibold">Live Metrics</span>
+                    <span class="text-xs font-mono text-indigo-400 font-semibold uppercase tracking-widest">Live Metrics</span>
                     <h2 class="text-3xl font-extrabold text-white mt-1">Current Infrastructure Scale</h2>
                 </div>
-                <div class="text-xs font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-lg flex items-center gap-2">
-                    <span class="h-2 w-2 rounded-full bg-emerald-400 animate-ping"></span>
+                <div class="text-xs font-mono text-teal-400 bg-teal-500/10 border border-teal-500/20 px-3 py-1.5 rounded-lg flex items-center gap-2">
+                    <span class="h-2 w-2 rounded-full bg-teal-400 animate-ping"></span>
                     <span>LIVE API METRICS ACTIVE</span>
                 </div>
             </div>
 
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
                 
-                <div class="plinth-card p-6 sm:p-8 text-center space-y-2 group hover:border-emerald-500/50">
+                <div class="plinth-card p-6 sm:p-8 text-center space-y-2 group hover:border-indigo-500/50">
                     <div id="stat-servers" class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 font-mono group-hover:scale-105 transition-transform duration-300">
                         40.9k
                     </div>
@@ -697,7 +709,7 @@
                     <div class="text-xs font-mono text-slate-500">Live count</div>
                 </div>
 
-                <div class="plinth-card p-6 sm:p-8 text-center space-y-2 group hover:border-cyan-500/50">
+                <div class="plinth-card p-6 sm:p-8 text-center space-y-2 group hover:border-violet-500/50">
                     <div id="stat-users" class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 font-mono group-hover:scale-105 transition-transform duration-300">
                         38.7k
                     </div>
@@ -705,7 +717,7 @@
                     <div class="text-xs font-mono text-slate-500">Active userbase</div>
                 </div>
 
-                <div class="plinth-card p-6 sm:p-8 text-center space-y-2 group hover:border-indigo-500/50">
+                <div class="plinth-card p-6 sm:p-8 text-center space-y-2 group hover:border-teal-500/50">
                     <div class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 font-mono group-hover:scale-105 transition-transform duration-300">
                         11+
                     </div>
@@ -713,7 +725,7 @@
                     <div class="text-xs font-mono text-slate-500">Managed daily</div>
                 </div>
 
-                <div class="plinth-card p-6 sm:p-8 text-center space-y-2 group hover:border-yellow-500/50">
+                <div class="plinth-card p-6 sm:p-8 text-center space-y-2 group hover:border-indigo-500/50">
                     <div class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 font-mono group-hover:scale-105 transition-transform duration-300">
                         99.9%
                     </div>
@@ -726,7 +738,7 @@
 
         <!-- CONTACT SECTION -->
         <section id="contact" class="relative">
-            <div class="plinth-card p-8 sm:p-14 text-center space-y-8 overflow-hidden border border-emerald-500/30">
+            <div class="plinth-card p-8 sm:p-14 text-center space-y-8 overflow-hidden border border-indigo-500/30">
                 <div class="max-w-2xl mx-auto space-y-4">
                     <h2 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">Let's build resilient systems.</h2>
                     <p class="text-slate-400 text-base sm:text-lg leading-relaxed">
@@ -741,7 +753,7 @@
                     </a>
 
                     <a href="https://discord.com/users/741184115981680702" target="_blank" rel="noopener" class="ks-button ks-button-ghost">
-                        <svg class="w-5 h-5 fill-current text-[#5865F2]" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                        <svg class="w-5 h-5 fill-current text-indigo-400" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
                         <span>Discord Profile</span>
                     </a>
                 </div>
@@ -749,9 +761,9 @@
                 <footer class="pt-12 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center text-xs font-medium text-slate-500 gap-4">
                     <p>© 2026 Sarvesh Patki. All rights reserved.</p>
                     <div class="flex items-center gap-6">
-                        <a href="https://github.com/SarveshPatki" target="_blank" rel="noopener" class="hover:text-emerald-400 transition-colors">GitHub</a>
-                        <a href="https://coderoasis.com/" target="_blank" rel="noopener" class="hover:text-emerald-400 transition-colors">Coaderoasis</a>
-                        <a href="https://freezehost.pro/" target="_blank" rel="noopener" class="hover:text-emerald-400 transition-colors">FreezeHost</a>
+                        <a href="https://github.com/SarveshPatki" target="_blank" rel="noopener" class="hover:text-indigo-400 transition-colors">GitHub</a>
+                        <a href="https://coderoasis.com/" target="_blank" rel="noopener" class="hover:text-indigo-400 transition-colors">Coaderoasis</a>
+                        <a href="https://freezehost.pro/" target="_blank" rel="noopener" class="hover:text-indigo-400 transition-colors">FreezeHost</a>
                     </div>
                 </footer>
             </div>
@@ -818,7 +830,7 @@
                 window.addEventListener('touchend', () => { isDragging = false; });
             }
 
-            // --- 3. Spotlight Mouse Effect ---
+            // --- 3. Spotlight Shader Effect ---
             const spotlightCards = document.querySelectorAll('.spotlight-card');
             spotlightCards.forEach(card => {
                 card.addEventListener('mousemove', (e) => {
