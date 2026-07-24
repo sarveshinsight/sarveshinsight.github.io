@@ -550,12 +550,11 @@
             // --- 2. Floating Navbar Active Pill & Scrollspy ---
             const navItems = document.querySelectorAll('.nav-item');
             const navPill = document.getElementById('nav-pill');
-            const sections = document.querySelectorAll('section[id]');
+            const sections = Array.from(document.querySelectorAll('section[id]'));
+            let activeSectionId = null;
 
             function updateNavPill(activeLink) {
                 if (!activeLink || !navPill) return;
-                const rect = activeLink.getBoundingClientRect();
-                const parentRect = activeLink.parentElement.getBoundingClientRect();
                 
                 navPill.style.left = `${activeLink.offsetLeft}px`;
                 navPill.style.width = `${activeLink.offsetWidth}px`;
@@ -572,24 +571,34 @@
                 });
             }
 
-            // Initial Pill Position
-            const homeLink = document.querySelector('[data-nav="home"]');
-            if (homeLink) updateNavPill(homeLink);
+            function handleScroll() {
+                const scrollPosition = window.scrollY;
+                let currentId = 'home';
 
-            // Scrollspy Listener
-            window.addEventListener('scroll', () => {
-                let currentSectionId = 'home';
-                const scrollPos = window.scrollY + 200;
-
-                sections.forEach(section => {
-                    const top = section.offsetTop;
-                    const height = section.offsetHeight;
-                    if (scrollPos >= top && scrollPos < top + height) {
-                        currentSectionId = section.getAttribute('id');
+                // Find section currently in view based on scroll position offset
+                for (let i = 0; i < sections.length; i++) {
+                    const section = sections[i];
+                    const sectionTop = section.offsetTop - 250;
+                    if (scrollPosition >= sectionTop) {
+                        currentId = section.getAttribute('id');
                     }
-                });
+                }
 
-                const targetLink = document.querySelector(`[data-nav="${currentSectionId}"]`);
+                if (currentId !== activeSectionId) {
+                    activeSectionId = currentId;
+                    const targetLink = document.querySelector(`[data-nav="${currentId}"]`);
+                    if (targetLink) updateNavPill(targetLink);
+                }
+            }
+
+            // Initial call and passive scroll listener
+            setTimeout(() => {
+                handleScroll();
+            }, 100);
+
+            window.addEventListener('scroll', handleScroll, { passive: true });
+            window.addEventListener('resize', () => {
+                const targetLink = document.querySelector(`[data-nav="${activeSectionId || 'home'}"]`);
                 if (targetLink) updateNavPill(targetLink);
             });
 
